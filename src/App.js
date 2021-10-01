@@ -101,6 +101,8 @@ class App extends React.Component {
           abrirCarrinho={this.abrirCarrinho}
           totalItens={this.state.carrinho.length}
         />
+        {/* Colocar componente de filtros abaixo desta linha */}
+
         <CardLista>
           {this.state.produtos.map((produto) => (
             <CardProduto
