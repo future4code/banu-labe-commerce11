@@ -7,6 +7,8 @@ Projeto desenvolvido para prática de busca, ordenação e filtros utilizando Re
 
 ## Link do Surge
 
+[LabEcommerce](https://absurd-wash.surge.sh/)
+
 ## O que funciona
 
 - Adiconar produtos no carrinho
