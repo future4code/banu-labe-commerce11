@@ -5,12 +5,17 @@ import Header from './components/Header';
 import { CardLista } from './styles';
 
 import { listaDeProdutos } from './data/produtos';
+import FiltroProdutos from './components/Filtro';
 
 class App extends React.Component {
   state = {
     produtos: listaDeProdutos,
     carrinho: [],
     carrinhoEstaAberto: false,
+    valorMinimo: '',
+    valorMaximo: '',
+    nome: '',
+    ordenar: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -87,6 +92,23 @@ class App extends React.Component {
     });
   };
 
+  onChangeValorMinimo = (e) => {
+    this.setState({ valorMinimo: e.target.value });
+  };
+
+  onChangeValorMaximo = (e) => {
+    this.setState({ valorMaximo: e.target.value });
+  };
+
+  onChangeBuscarNome = (e) => {
+    this.setState({ nome: e.target.value });
+  };
+
+  onChangeOrdenar = (e) => {
+    this.setState({ ordenar: e.target.value });
+    console.log(this.state.ordenar);
+  };
+
   render() {
     return (
       <>
@@ -102,19 +124,56 @@ class App extends React.Component {
           totalItens={this.state.carrinho.length}
         />
         {/* Colocar componente de filtros abaixo desta linha */}
-
+        <FiltroProdutos
+          valorMinimo={this.state.valorMinimo}
+          valorMaximo={this.state.valorMaximo}
+          nome={this.state.nome}
+          onCahngeValorMinimo={this.onChangeValorMinimo}
+          onChangeValotMaximo={this.onChangeValorMaximo}
+          onChangeBuscarNome={this.onChangeBuscarNome}
+          ordenar={this.state.ordenar}
+          onChangeOrdenar={this.onChangeOrdenar}
+        />
         <CardLista>
-          {this.state.produtos.map((produto) => (
-            <CardProduto
-              adicionarProdutoCarrinho={() =>
-                this.adicionarProdutoCarrinho(produto.id)
+          {this.state.produtos
+            .filter((produto) => {
+              return produto.nome
+                .toLowerCase()
+                .includes(this.state.nome.toLowerCase());
+            })
+            .filter((produto) => {
+              return (
+                this.state.valorMinimo === '' ||
+                produto.preco >= this.state.valorMinimo
+              );
+            })
+            .filter((produto) => {
+              return (
+                this.state.valorMaximo === '' ||
+                produto.preco <= this.state.valorMaximo
+              );
+            })
+            .sort((valorAtual, proximoValor) => {
+              switch (this.state.ordenar) {
+                case 'nome':
+                  return valorAtual.nome.localeCompare(proximoValor.nome);
+                case 'precomaximo':
+                  return proximoValor.preco - valorAtual.preco;
+                default:
+                  return valorAtual.preco - proximoValor.preco;
               }
-              key={produto.id}
-              imagem={produto.imagem}
-              nome={produto.nome}
-              preco={produto.preco}
-            />
-          ))}
+            })
+            .map((produto) => (
+              <CardProduto
+                adicionarProdutoCarrinho={() =>
+                  this.adicionarProdutoCarrinho(produto.id)
+                }
+                key={produto.id}
+                imagem={produto.imagem}
+                nome={produto.nome}
+                preco={produto.preco}
+              />
+            ))}
         </CardLista>
       </>
     );
