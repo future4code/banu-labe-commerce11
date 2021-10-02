@@ -1,5 +1,54 @@
 import styled from 'styled-components';
 
+export const FiltroContainer = styled.div`
+  padding: 60px 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
+export const FiltroGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
+`;
+
+export const FiltroInput = styled.input`
+  padding: 8px 10px;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid #c9c9c9;
+  transition: all 0.2s ease;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    border-color: #0e233c;
+  }
+`;
+
+export const FiltroSelect = styled.select`
+  padding: 8px 10px;
+  font-size: 16px;
+  margin-left: 10px;
+  outline: none;
+  border: 1px solid #c9c9c9;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    border-color: #0e233c;
+  }
+`;
+
 export const HeaderPrincipal = styled.header`
   min-height: 70px;
   background: #0e233c;
